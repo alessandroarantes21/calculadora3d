@@ -1,355 +1,251 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Custo de Impressão 3D</title>
-    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Custo de Impressão 3D</title>
+
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2196F3">
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #2196F3;
-            margin-bottom: 30px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        input[type="number"] {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        .btn {
-            background-color: #2196F3;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s;
-        }
-        .btn:hover {
-            background-color: #0b7dda;
-        }
-        .result {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #e3f2fd;
-            border-radius: 5px;
-            display: none;
-        }
-        .result h2 {
-            margin-top: 0;
-            color: #2196F3;
-        }
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-        .result-item:last-child {
-            border-bottom: none;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-        .info-icon {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            background-color: #2196F3;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 18px;
-            font-size: 12px;
-            margin-left: 5px;
-            cursor: help;
-        }
-        .tooltip {
-            position: relative;
-            display: inline-block;
-        }
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 250px;
-            background-color: #555;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 10px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -125px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 14px;
-            font-weight: normal;
-        }
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
-        .two-columns {
-            display: flex;
-            gap: 20px;
-        }
-        .column {
-            flex: 1;
-        }
-        @media (max-width: 768px) {
-            .two-columns {
-                flex-direction: column;
-            }
-        }
-                }
-        @media (max-width: 768px) {
-            .two-columns {
-                flex-direction: column;
-            }
-        }
-    </style>
-    /* ===== DARK MODE ===== */
+
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #2196F3;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.btn {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn:hover {
+    background-color: #0b7dda;
+}
+
+.result {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #e3f2fd;
+    border-radius: 5px;
+    display: none;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.result-item:last-child {
+    font-weight: bold;
+    font-size: 1.2em;
+    border: none;
+}
+
+.two-columns {
+    display: flex;
+    gap: 20px;
+}
+
+.column {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .two-columns {
+        flex-direction: column;
+    }
+}
+
+/* ===== DARK MODE ===== */
 .dark {
-  background-color: #121212;
-  color: white;
+    background-color: #121212;
+    color: white;
 }
 
 .dark .container {
-  background-color: #1e1e1e;
+    background-color: #1e1e1e;
 }
 
 .dark input {
-  background-color: #333;
-  color: white;
-  border: 1px solid #555;
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
 }
 
 .dark .result {
-  background-color: #263238;
+    background-color: #263238;
 }
+</style>
 
 </head>
+
 <body>
-            <h1>Calculadora de Custo de Impressão 3D</h1>
-        <button onclick="toggleDark()">🌙 Modo Escuro</button>
 
-        
-    </style>
-    
-</head>
-<body>
-    <div class="container">
-        <h1>Calculadora de Custo de Impressão 3D</h1>
-        <button onclick="toggleDark()">🌙 Modo Escuro</button>
+<div class="container">
+<h1>Calculadora de Custo de Impressão 3D</h1>
+<button class="btn" onclick="toggleDark()">🌙 Modo Escuro</button>
 
-        
-        <div class="two-columns">
-            <div class="column">
-                <div class="form-group">
-                    <label for="filamentWeight">
-                        Peso do Filamento (g)
-                        <div class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">Peso estimado do filamento que será usado na impressão</span>
-                        </div>
-                    </label>
-                    <input type="number" id="filamentWeight" min="0" step="0.01" placeholder="Ex: 100">
-                </div>
+<div class="two-columns">
 
-                <div class="form-group">
-                    <label for="filamentPrice">
-                        Preço do Rolo de Filamento (R$)
-                        <div class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">Preço do rolo de filamento completo</span>
-                        </div>
-                    </label>
-                    <input type="number" id="filamentPrice" min="0" step="0.01" placeholder="Ex: 120">
-                </div>
+<div class="column">
+<div class="form-group">
+<label>Peso do Filamento (g)</label>
+<input type="number" id="filamentWeight" placeholder="Ex: 100">
+</div>
 
-                <div class="form-group">
-                    <label for="filamentRollWeight">
-                        Peso do Rolo de Filamento (kg)
-                        <div class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">Peso total do rolo de filamento (geralmente 1kg)</span>
-                        </div>
-                    </label>
-                    <input type="number" id="filamentRollWeight" min="0" step="0.01" value="1">
-                </div>
-            </div>
+<div class="form-group">
+<label>Preço do Rolo de Filamento (R$)</label>
+<input type="number" id="filamentPrice" placeholder="Ex: 120">
+</div>
 
-            <div class="column">
-                <div class="form-group">
-                    <label for="printTime">
-                        Tempo de Impressão (horas)
-                        <div class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">Tempo estimado para completar a impressão</span>
-                        </div>
-                    </label>
-                    <input type="number" id="printTime" min="0" step="0.1" placeholder="Ex: 5">
-                </div>
+<div class="form-group">
+<label>Peso do Rolo de Filamento (kg)</label>
+<input type="number" id="filamentRollWeight" value="1">
+</div>
+</div>
 
-                <div class="form-group">
-                    <label for="energyCost">
-                        Custo de Energia (R$/kWh)
-                        <div class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">Custo do kilowatt-hora na sua região</span>
-                        </div>
-                    </label>
-                    <input type="number" id="energyCost" min="0" step="0.01" value="0.80">
-                </div>
+<div class="column">
+<div class="form-group">
+<label>Tempo de Impressão (horas)</label>
+<input type="number" id="printTime" placeholder="Ex: 5">
+</div>
 
-                <div class="form-group">
-                    <label for="printerPower">
-                        Potência da Impressora (W)
-                        <div class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">Consumo médio de energia da impressora em watts</span>
-                        </div>
-                    </label>
-                    <input type="number" id="printerPower" min="0" step="1" value="150">
-                </div>
-            </div>
-        </div>
+<div class="form-group">
+<label>Custo de Energia (R$/kWh)</label>
+<input type="number" id="energyCost" value="0.80">
+</div>
 
-        <div class="form-group">
-            <label for="wearCost">
-                Taxa de Desgaste da Impressora (%)
-                <div class="tooltip">
-                    <span class="info-icon">?</span>
-                    <span class="tooltiptext">Percentual para cobrir manutenção e depreciação da impressora</span>
-                </div>
-            </label>
-            <input type="number" id="wearCost" min="0" max="100" step="1" value="10">
-        </div>
+<div class="form-group">
+<label>Potência da Impressora (W)</label>
+<input type="number" id="printerPower" value="150">
+</div>
+</div>
 
-        <div class="form-group">
-            <label for="profitMargin">
-                Margem de Lucro (%)
-                <div class="tooltip">
-                    <span class="info-icon">?</span>
-                    <span class="tooltiptext">Percentual de lucro desejado sobre o custo total</span>
-                </div>
-            </label>
-            <input type="number" id="profitMargin" min="0" step="1" value="30">
-        </div>
+</div>
 
-        <button class="btn" onclick="calculateCost()">Calcular Custo</button>
+<div class="form-group">
+<label>Taxa de Desgaste (%)</label>
+<input type="number" id="wearCost" value="10">
+</div>
 
-        <div class="result" id="result">
-            <h2>Resultado do Cálculo</h2>
-            <div class="result-item">
-                <span>Custo do Filamento:</span>
-                <span id="filamentCostResult">R$ 0,00</span>
-            </div>
-            <div class="result-item">
-                <span>Custo de Energia:</span>
-                <span id="energyCostResult">R$ 0,00</span>
-            </div>
-            <div class="result-item">
-                <span>Custo de Desgaste:</span>
-                <span id="wearCostResult">R$ 0,00</span>
-            </div>
-            <div class="result-item">
-                <span>Custo Total de Produção:</span>
-                <span id="totalCostResult">R$ 0,00</span>
-            </div>
-            <div class="result-item">
-                <span>Preço de Venda Sugerido:</span>
-                <span id="suggestedPriceResult">R$ 0,00</span>
-            </div>
-        </div>
-    </div>
+<div class="form-group">
+<label>Margem de Lucro (%)</label>
+<input type="number" id="profitMargin" value="30">
+</div>
 
-    <script>
-        function calculateCost() {
-            // Obter valores dos inputs
-            const filamentWeight = parseFloat(document.getElementById('filamentWeight').value) || 0;
-            const filamentPrice = parseFloat(document.getElementById('filamentPrice').value) || 0;
-            const filamentRollWeight = parseFloat(document.getElementById('filamentRollWeight').value) || 1;
-            const printTime = parseFloat(document.getElementById('printTime').value) || 0;
-            const energyCost = parseFloat(document.getElementById('energyCost').value) || 0;
-            const printerPower = parseFloat(document.getElementById('printerPower').value) || 0;
-            const wearCost = parseFloat(document.getElementById('wearCost').value) || 0;
-            const profitMargin = parseFloat(document.getElementById('profitMargin').value) || 0;
+<button class="btn" onclick="calculateCost()">Calcular Custo</button>
 
-            // Converter peso do rolo de kg para g
-            const filamentRollWeightGrams = filamentRollWeight * 1000;
+<div class="result" id="result">
+<h2>Resultado</h2>
 
-            // Calcular custo do filamento
-            const filamentCost = (filamentWeight / filamentRollWeightGrams) * filamentPrice;
+<div class="result-item">
+<span>Custo Filamento:</span>
+<span id="filamentCostResult">R$ 0,00</span>
+</div>
 
-            // Calcular custo de energia
-            const energyConsumption = (printerPower / 1000) * printTime; // kWh
-            const energyCostTotal = energyConsumption * energyCost;
+<div class="result-item">
+<span>Custo Energia:</span>
+<span id="energyCostResult">R$ 0,00</span>
+</div>
 
-            // Calcular custo de desgaste
-            const wearCostTotal = (filamentCost + energyCostTotal) * (wearCost / 100);
+<div class="result-item">
+<span>Custo Desgaste:</span>
+<span id="wearCostResult">R$ 0,00</span>
+</div>
 
-            // Calcular custo total
-            const totalCost = filamentCost + energyCostTotal + wearCostTotal;
+<div class="result-item">
+<span>Total:</span>
+<span id="totalCostResult">R$ 0,00</span>
+</div>
 
-            // Calcular preço sugerido com margem de lucro
-            const suggestedPrice = totalCost * (1 + (profitMargin / 100));
+<div class="result-item">
+<span>Preço Venda:</span>
+<span id="suggestedPriceResult">R$ 0,00</span>
+</div>
 
-            // Exibir resultados
-            document.getElementById('filamentCostResult').textContent = `R$ ${filamentCost.toFixed(2)}`;
-            document.getElementById('energyCostResult').textContent = `R$ ${energyCostTotal.toFixed(2)}`;
-            document.getElementById('wearCostResult').textContent = `R$ ${wearCostTotal.toFixed(2)}`;
-            document.getElementById('totalCostResult').textContent = `R$ ${totalCost.toFixed(2)}`;
-            document.getElementById('suggestedPriceResult').textContent = `R$ ${suggestedPrice.toFixed(2)}`;
+</div>
+</div>
+
+<script>
+function calculateCost() {
+const filamentWeight = parseFloat(document.getElementById('filamentWeight').value) || 0;
+const filamentPrice = parseFloat(document.getElementById('filamentPrice').value) || 0;
+const filamentRollWeight = parseFloat(document.getElementById('filamentRollWeight').value) || 1;
+const printTime = parseFloat(document.getElementById('printTime').value) || 0;
+const energyCost = parseFloat(document.getElementById('energyCost').value) || 0;
+const printerPower = parseFloat(document.getElementById('printerPower').value) || 0;
+const wearCost = parseFloat(document.getElementById('wearCost').value) || 0;
+const profitMargin = parseFloat(document.getElementById('profitMargin').value) || 0;
+
+const filamentCost = (filamentWeight / (filamentRollWeight * 1000)) * filamentPrice;
+const energyCostTotal = (printerPower / 1000) * printTime * energyCost;
+const wearCostTotal = (filamentCost + energyCostTotal) * (wearCost / 100);
+const totalCost = filamentCost + energyCostTotal + wearCostTotal;
+const suggestedPrice = totalCost * (1 + profitMargin / 100);
+
+document.getElementById('filamentCostResult').textContent = `R$ ${filamentCost.toFixed(2)}`;
+document.getElementById('energyCostResult').textContent = `R$ ${energyCostTotal.toFixed(2)}`;
+document.getElementById('wearCostResult').textContent = `R$ ${wearCostTotal.toFixed(2)}`;
+document.getElementById('totalCostResult').textContent = `R$ ${totalCost.toFixed(2)}`;
+document.getElementById('suggestedPriceResult').textContent = `R$ ${suggestedPrice.toFixed(2)}`;
+
 document.getElementById('result').style.display = 'block';
 }
-</script>
 
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
-</script>
-<script>
 function toggleDark() {
-  document.body.classList.toggle('dark');
+document.body.classList.toggle('dark');
+}
+
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.register('sw.js');
 }
 </script>
 
 </body>
 </html>
-
-
-
-
